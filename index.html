@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/png" href="img/icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+
+    <div class="overall">
+
+        <div class="top_div">
+            <nav>
+                <select class="select-city">
+                    <option value="0">Łódź</option>
+                    <option value="1">Banff</option>
+                    <option value="2">Sromowce Niżne</option>
+                    <option value="3">Sydney</option>
+                    <option value="4">Ennis</option>
+                </select>
+            </nav>
+        </div>
+
+
+        <div class="location">
+            <div class="time">
+                <h1 class="location-timezone">Time Zone</h1>
+                <h2 class="time-gmt">00:00:00</h2>
+            </div>
+            <canvas class="icon" width="128" height="128"></canvas>
+        </div>
+
+        <!--        --------------------------------------------------------->
+
+        <div class="chart-temp">
+
+            <div class="chart">
+                <canvas id="chart-day" width="400" height="100"></canvas>
+            </div>
+
+            <div class="temperature">
+                <div class="degree-section">
+                    <h2 class="temperature-degree">34</h2>
+                    <span>C</span>
+                </div>
+
+                <div class="temperature-description">Its freaking cold</div>
+            </div>
+
+            <div class="chart">
+                <canvas id="chart-hour" width="400" height="100"></canvas>
+            </div>
+
+        </div>
+
+        <!--        --------------------------------------------------------->
+
+
+        <footer>By Mateusz Wiśniewski</footer>
+
+    </div>
+
+
+    <div class="details">
+
+
+
+        <div class="daily">
+            <div class="top">
+                <h2>Day by Day</h2>
+            </div>
+            <div class="days-details">
+                <div class="day" id="d">
+                    <div class="day-date">Date</div>
+                    <div class="day-name">Day</div>
+                    <div class="day-icon">Icon</div>
+                    <div class="day-summary">Summary</div>
+                    <div class="day-temp-min">Min temp</div>
+                    <div class="day-temp-high">Max temp</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hourly">
+            <div class="top">
+                <h2>Hour by Hour</h2>
+            </div>
+            <div class="hours-details">
+                <div class="hour" id="h">
+                    <div class="hour-hour">Hour</div>
+                    <div class="hour-icon">Icon</div>
+                    <div class="hour-summary">Summary</div>
+                    <div class="hour-temp">Temp</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="scripts/skycons.js"></script>
+    <script src="scripts/funcs.js"></script>
+    <script src="scripts/chart.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>
