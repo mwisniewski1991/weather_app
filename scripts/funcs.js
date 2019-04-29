@@ -80,7 +80,8 @@ const addDayDiv = () => {
         {
             div = document.createElement("div");
         
-            div.classList.add("day");
+            // div.classList.add("day"); 
+            div.classList.add("days__day");
             div.id = `d${i}`;
 
             divFragment.appendChild(div); 
