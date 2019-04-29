@@ -4,3 +4,8 @@ $color-blue-2: rgb(10, 20, 74);
 
 $color-white: #fff;
 $color-black: #000;
+
+$gradient-one: linear-gradient($color-blue-1, $color-blue-2);
+$gradient-two: linear-gradient($color-blue-2, $color-blue-1);
+
+$text-shadow-one: 2px 2px 10px  $color-black;

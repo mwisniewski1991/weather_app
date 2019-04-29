@@ -1,0 +1,64 @@
+//HEADING
+.heading-one{
+    font-size: 5rem;
+    letter-spacing: 1rem;
+
+    text-shadow: $text-shadow-one;
+}
+
+.heading-two{
+    font-size: 3rem;
+    letter-spacing: .5rem;
+
+    text-shadow: $text-shadow-one;
+}
+
+
+.nav{
+    position: relative;
+    color: $color-white;
+
+    &:before{
+        width: 50px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        pointer-events: none;
+        background-color: rgb(20, 67, 147);
+
+        content: '\f358';
+        font-family: "Font Awesome 5 Free";
+        text-align: center;
+        line-height: 40px;
+        font-size: 30px;
+    }
+
+    &:hover::before{
+        background-color: rgb(20, 67, 147); 
+    }
+}
+
+//CITY INPUT
+.select-city{
+
+    border: none;
+    width: 220px;
+    height: 40px;
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+/*    background-color: rgb(56, 86, 248);*/
+    background: transparent;
+    box-shadow: 3px 3px 2px 1px #000;
+
+    color: $color-white;
+    font-family: inherit;
+    font-size: 2rem;
+    
+
+    &__item{
+        background-color: rgb(56, 86, 248);
+    }   
+}
+

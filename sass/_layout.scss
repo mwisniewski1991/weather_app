@@ -1,0 +1,119 @@
+//MAIN PAGE
+.overall{
+    height: 100vh;
+    width: 100%;
+    background: $gradient-one;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+//HEADER
+.header{
+    // padding: 2rem 0rem;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.location{
+    margin: 0 auto;
+    width: 50%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__time{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    &__icon{
+        // width: 15rem;
+    }
+}
+
+.details{
+    width: 100%;
+    
+    display: flex;
+    justify-content: space-between;
+
+    &__chart{
+        height: 25rem;
+        width: 40%;
+    }
+
+    &__temperature{
+        text-shadow: $text-shadow-one;
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    &__degree-section{
+        display: flex;
+        align-items: center;
+    }
+
+    &__temperature-description{
+        font-size: 2rem;
+    }
+
+    &__span{
+        margin-left: .5rem;
+        font-size: 3rem;
+    }
+}
+
+
+//DAYS DETAILS
+.days{
+    background: $gradient-two;
+    height: 90vh;
+    padding-top: 5rem;
+
+    display: flex;
+    flex-direction: column;
+    // flex-wrap: wrap;
+
+    align-items: center;
+
+
+    &__details{
+        padding-top: 5rem;;
+        height: 40rem;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__day{
+        width: 90%;
+        height: 10vh;
+        margin: auto;
+        border-bottom: 1px dashed #fff;
+
+        font-size: 1.5rem;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+//HOURS DETAILS
+.hours{
+    background: $gradient-one;
+}
