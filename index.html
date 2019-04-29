@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
 
     <link rel="shortcut icon" type="image/png" href="img/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
@@ -19,69 +19,75 @@
 <body>
 
     <div class="overall">
+        
 
-        <div class="top_div">
-            <nav>
-                <select class="select-city">
-                    <option value="0">Łódź</option>
-                    <option value="1">Banff</option>
-                    <option value="2">Sromowce Niżne</option>
-                    <option value="3">Sydney</option>
-                    <option value="4">Ennis</option>
-                </select>
-            </nav>
-        </div>
+    <header class="header">
+        <h1 class="heading-one">Weather App</h1>
 
+        <nav class="nav">
+            <select class="select-city">
+                <option class="select-city__item" value="0">Łódź</option>
+                <option class="select-city__item" value="1">Banff</option>
+                <option class="select-city__item" value="2">Sromowce Niżne</option>
+                <option class="select-city__item" value="3">Sydney</option>
+                <option class="select-city__item" value="4">Ennis</option>
+            </select>
+        </nav>
+    </header>
+
+    
+    
 
         <div class="location">
-            <div class="time">
-                <h1 class="location-timezone">Time Zone</h1>
-                <h2 class="time-gmt">00:00:00</h2>
+            <div class="location__time">
+                <h2 class="heading-two location__timezone location-timezone">Time Zone</h2>
+                <h2 class="heading-two location__time-gmt time-gmt">00:00:00</h2>
             </div>
-            <canvas class="icon" width="128" height="128"></canvas>
+            <canvas class="location__icon icon" width="128" height="128"></canvas>
         </div>
 
         <!--        --------------------------------------------------------->
 
-        <div class="chart-temp">
+        <div class="details chart-temp">
 
-            <div class="chart">
+            <div class="details__chart chart">
                 <canvas id="chart-day" width="400" height="100"></canvas>
             </div>
 
-            <div class="temperature">
-                <div class="degree-section">
-                    <h2 class="temperature-degree">34</h2>
-                    <span>C</span>
+            <div class="details__temperature temperature">
+                
+                <div class="details__degree-section degree-section">
+                    <h2 class="heading-two temperature-degree">34</h2>
+                    <span class="details__span">C</span>
                 </div>
 
-                <div class="temperature-description">Its freaking cold</div>
+                <div class="details__temperature-description temperature-description">Its freaking cold</div>
             </div>
 
-            <div class="chart">
+            <div class="details__chart chart">
                 <canvas id="chart-hour" width="400" height="100"></canvas>
             </div>
 
         </div>
 
-        <!--        --------------------------------------------------------->
-
-
-        <footer>By Mateusz Wiśniewski</footer>
+        <!-- <footer>By Mateusz Wiśniewski</footer> -->
 
     </div>
 
 
-    <div class="details">
+
+    <main>
 
 
 
-        <div class="daily">
-            <div class="top">
-                <h2>Day by Day</h2>
-            </div>
-            <div class="days-details">
-                <div class="day" id="d">
+        
+        <div class="days daily">
+            <!-- <div class="days__top top"> -->
+                <h2 class="heading-two">Day by Day</h2>
+            <!-- </div> -->
+
+            <div class="days__details days-details">
+                <div class="days__day" id="d">
                     <div class="day-date">Date</div>
                     <div class="day-name">Day</div>
                     <div class="day-icon">Icon</div>
@@ -91,11 +97,11 @@
                 </div>
             </div>
         </div>
+        
 
-
-        <div class="hourly">
+        <div class="hours hourly">
             <div class="top">
-                <h2>Hour by Hour</h2>
+                <h2 class="heading-two">Hour by Hour</h2>
             </div>
             <div class="hours-details">
                 <div class="hour" id="h">
@@ -106,10 +112,9 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-
+        
+    </main>
+        
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="scripts/skycons.js"></script>
