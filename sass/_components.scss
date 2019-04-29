@@ -13,7 +13,33 @@
     text-shadow: $text-shadow-one;
 }
 
+.text{
+    font-size: 2rem;
 
+    &:nth-child(2){
+        margin-left: 2rem;        
+    }
+
+    &--box{
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &--by{
+    }
+
+    &--mw{
+        margin-left: 1rem;        
+        color: darkred;
+        font-weight: bold;
+    }
+}
+
+
+
+
+
+//NAVIGATION
 .nav{
     position: relative;
     color: $color-white;
