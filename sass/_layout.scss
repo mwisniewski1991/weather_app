@@ -79,8 +79,9 @@
 //DAYS DETAILS
 .days{
     background: $gradient-two;
-    height: 90vh;
+    // height: 90vh;
     padding-top: 5rem;
+    padding-bottom: 5rem;
 
     display: flex;
     flex-direction: column;
@@ -90,8 +91,7 @@
 
 
     &__details{
-        padding-top: 5rem;;
-        height: 40rem;
+        padding-top: 5rem;
         width: 100%;
 
         display: flex;
@@ -110,10 +110,9 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        text-align: center;
         
         &:first-child{
-            font-weight: bold;
+            font-size: 2rem;
         }
 
         & > * {
@@ -127,7 +126,7 @@
 
     //columns for each day{
     &__date{
-        flex: 0 0 20%;
+        flex: 0 0 16%;
     }
 
     &__name{
@@ -145,7 +144,7 @@
 
     &__temp-min,
     &__temp-high{
-        flex: 0 0 10%;
+        flex: 0 0 12%;
 
         &::after{
             content: " C";
@@ -156,4 +155,63 @@
 //HOURS DETAILS
 .hours{
     background: $gradient-one;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    //test
+
+    &__details{
+        width: 100%;
+        padding-top: 5rem;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        height: 40vh;
+    }
+
+    &__hour{
+        width: 45%;
+        height: 10vh;
+        margin: 0 auto;
+        border-bottom: 1px dashed #fff;
+
+        font-size: 1.5rem;
+        text-shadow: $text-shadow-one;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        &:first-child{
+            font-size: 2rem;
+        }
+
+        & > * {
+            text-align: center;
+        }
+
+        &:not(:first-child):hover{
+            background: rgba(138, 116, 116, 0.05);
+        }
+    }
+
+    &__time{
+        flex: 0 0 20%;
+    }
+
+    &__icon{
+        flex: 0 0 20%;
+    }
+
+    &__summary{
+        flex: 1;
+    }
+
+    &__temp{
+        flex: 0 0 15%;
+    }
 }
