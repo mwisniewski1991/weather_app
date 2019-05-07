@@ -9,7 +9,8 @@
 
     <link rel="shortcut icon" type="image/png" href="img/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,26 +20,27 @@
 <body>
 
     <div class="overall">
-        
 
-    <header class="header">
-        <div class="text--box">
-            <h1 class="heading-one">Weather App</h1><span class="text text--by">by</span><span class="text text--mw">MW</span>
-        </div>
 
-        <nav class="nav">
-            <select class="select-city">
-                <option class="select-city__item" value="0">Łódź</option>
-                <option class="select-city__item" value="1">Banff</option>
-                <option class="select-city__item" value="2">Sromowce Niżne</option>
-                <option class="select-city__item" value="3">Sydney</option>
-                <option class="select-city__item" value="4">Ennis</option>
-            </select>
-        </nav>
-    </header>
+        <header class="header">
+            <div class="text--box">
+                <h1 class="heading-one">Weather App</h1><span class="text text--by">
+                    <!-- by</span><span class="text text--mw">MW</span> -->
+            </div>
 
-    
-    
+            <nav class="nav">
+                <select class="select-city">
+                    <option class="select-city__item" value="0">Łódź</option>
+                    <option class="select-city__item" value="1">Banff</option>
+                    <option class="select-city__item" value="2">Sromowce Niżne</option>
+                    <option class="select-city__item" value="3">Sydney</option>
+                    <option class="select-city__item" value="4">Ennis</option>
+                </select>
+            </nav>
+        </header>
+
+
+
 
         <div class="location">
             <div class="location__time">
@@ -57,7 +59,7 @@
             </div>
 
             <div class="details__temperature temperature">
-                
+
                 <div class="details__degree-section degree-section">
                     <h2 class="heading-two temperature-degree">34</h2>
                     <span class="details__span">C</span>
@@ -81,11 +83,9 @@
     <main>
 
 
-
-        
         <div class="days daily">
             <!-- <div class="days__top top"> -->
-                <h2 class="heading-two">Day by Day</h2>
+            <h2 class="heading-two">Day by Day</h2>
             <!-- </div> -->
 
             <div class="days__details days-details">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="days__day" id="d">
                     <div class="days__date day-date">2019.03.05</div>
-                    <div class="days__name day-name">Mondat</div>
+                    <div class="days__name day-name">Monday</div>
                     <div class="days__icon day-icon">Icon</div>
                     <div class="days__summary day-summary">Summary Summary Summary</div>
                     <div class="days__temp-min day-temp-min">5</div>
@@ -108,42 +108,86 @@
                 </div>
                 <div class="days__day" id="d">
                     <div class="days__date day-date">2019.03.05</div>
-                    <div class="days__name day-name">Mondat</div>
+                    <div class="days__name day-name">Monday</div>
                     <div class="days__icon day-icon">Icon</div>
                     <div class="days__summary day-summary">Summary Summary Summary</div>
                     <div class="days__temp-min day-temp-min">5</div>
                     <div class="days__temp-high day-temp-high">25</div>
                 </div>
                 <div class="days__day" id="d">
-                        <div class="days__date day-date">2019.03.05</div>
-                        <div class="days__name day-name">Mondat</div>
-                        <div class="days__icon day-icon">Icon</div>
-                        <div class="days__summary day-summary">Summary Summary Summary</div>
-                        <div class="days__temp-min day-temp-min">5</div>
-                        <div class="days__temp-high day-temp-high">25</div>
+                    <div class="days__date day-date">2019.03.05</div>
+                    <div class="days__name day-name">Monday</div>
+                    <div class="days__icon day-icon">Icon</div>
+                    <div class="days__summary day-summary">Summary Summary Summary</div>
+                    <div class="days__temp-min day-temp-min">5</div>
+                    <div class="days__temp-high day-temp-high">25</div>
                 </div>
-               
+                <div class="days__day" id="d">
+                    <div class="days__date day-date">2019.03.05</div>
+                    <div class="days__name day-name">Monday</div>
+                    <div class="days__icon day-icon">Icon</div>
+                    <div class="days__summary day-summary">Summary Summary Summary</div>
+                    <div class="days__temp-min day-temp-min">5</div>
+                    <div class="days__temp-high day-temp-high">25</div>
+                </div>
             </div>
 
         </div>
-        
+
 
         <div class="hours hourly">
-            <div class="top">
-                <h2 class="heading-two">Hour by Hour</h2>
-            </div>
-            <div class="hours-details">
-                <div class="hour" id="h">
-                    <div class="hour-hour">Hour</div>
-                    <div class="hour-icon">Icon</div>
-                    <div class="hour-summary">Summary</div>
-                    <div class="hour-temp">Temp</div>
+
+            <h2 class="heading-two">Hour by Hour</h2>
+
+            <div class="hours__details hours-details">
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">Hour</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary</div>
+                    <div class="hours__temp hour-temp">Temp</div>
                 </div>
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">08:00</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary Summary</div>
+                    <div class="hours__temp hour-temp">28</div>
+                </div>
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">08:00</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary Summary</div>
+                    <div class="hours__temp hour-temp">28</div>
+                </div>
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">08:00</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary Summary</div>
+                    <div class="hours__temp hour-temp">28</div>
+                </div>
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">08:00</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary Summary</div>
+                    <div class="hours__temp hour-temp">28</div>
+                </div>
+
+                <div class="hours__hour hour" id="h">
+                    <div class="hours__time hour-hour">08:00</div>
+                    <div class="hours__icon hour-icon">Icon</div>
+                    <div class="hours__summary hour-summary">Summary Summary</div>
+                    <div class="hours__temp hour-temp">28</div>
+                </div>
+
             </div>
         </div>
-        
+
     </main>
-        
+
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="scripts/skycons.js"></script>
