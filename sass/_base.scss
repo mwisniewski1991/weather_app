@@ -12,6 +12,19 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
+
+    @media screen and (max-width: 900px){
+        font-size: 50%; //1rem = 7px
+    }
+
+    @media screen and (max-width: 600px){
+        font-size: 43.75%; //1rem = 7px
+    }
+
+    @media screen and (min-width: 1200px){
+        font-size: 81.25%; //1rem = 12px
+    }
+
 }
 
 body{
