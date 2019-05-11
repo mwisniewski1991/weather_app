@@ -16,7 +16,7 @@ html {
   @media screen and (max-width: 600px) {
     html {
       font-size: 43.75%; } }
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1600px) {
     html {
       font-size: 81.25%; } }
 
@@ -33,7 +33,8 @@ body {
   justify-content: space-around; }
   @media screen and (max-width: 600px) {
     .overall {
-      height: auto; } }
+      height: auto;
+      padding-bottom: 5rem; } }
 
 .header {
   display: flex;
@@ -81,21 +82,23 @@ body {
     margin-left: .5rem;
     font-size: 3rem; }
   .location__temperature-description {
-    font-size: 3.5rem; }
+    font-size: 3rem; }
 
-.details {
+.charts {
   width: 100%;
   display: flex;
   justify-content: space-evenly; }
   @media screen and (max-width: 600px) {
-    .details {
+    .charts {
       flex-direction: column; } }
-  .details__chart {
+  .charts__chart {
     height: 25rem;
     width: 45%;
     background-color: rgba(255, 255, 255, 0.459); }
+    .charts__chart:first-child {
+      margin-bottom: 2rem; }
     @media screen and (max-width: 600px) {
-      .details__chart {
+      .charts__chart {
         margin: 0 auto;
         width: 90%; } }
 
