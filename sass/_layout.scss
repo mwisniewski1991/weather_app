@@ -10,6 +10,7 @@
 
     @media screen and (max-width: 600px){
         height: auto;
+        padding-bottom: 5rem;
     }
 }
 
@@ -96,18 +97,20 @@
 
     //description subarea
     &__temperature-description{
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 
    
 }
 
-//DETAILS - CHARTS
-.details{
+//CHARTS
+.charts{
     width: 100%;
     
     display: flex;
     justify-content: space-evenly;
+
+    
 
     @media screen and (max-width: 600px){
         flex-direction: column;
@@ -120,6 +123,10 @@
 
         //test
         background-color: rgba(255, 255, 255, 0.459);
+
+        &:first-child{
+            margin-bottom: 2rem;
+        }
 
         @media screen and (max-width: 600px){
             margin: 0 auto;
