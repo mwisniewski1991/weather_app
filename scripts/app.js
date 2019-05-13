@@ -23,8 +23,8 @@ const APIController =(function(){
 
 //VISIBLE PART
     return{
-        getData: function(cityNr){
-            console.log(cities[cityNr].name);
+        getData: async function(cityNr){
+            //CREATE PROMISE AND GET DATA IN OTHER MODULES
 
             //latitude and longitude for selected city
             let lat = cities[cityNr].lat;
@@ -34,20 +34,26 @@ const APIController =(function(){
             const proxy = `https://cors-anywhere.herokuapp.com/`;
             const api = `${proxy}https://api.darksky.net/forecast/f330eefb7842750c7f2570bb7772fbcf/${lat},${long}`;
         
-            // let cityData;
-            // fetch(api)
-            //     .then(response => {
-            //         return response.json();
-            //     })    
-            //     .then(data => {
-            //         console.log(data);
-            //         cityData = data;
-            //         return cityData;
-            //     })
-            
-            // console.log(cityData);
+            //fetch promise
+            let cityData = await fetch(api)
+                            .then(response => {
+                                return response.json();
+                            })    
+                            .then(data => {
+                                // console.log(data);
 
+                                //return as object
+                                return {
+                                    currently: data.currently,
+                                    daily: data.daily,
+                                    hourly: data.hourly,
+                                    timezone: data.timezone
+                                };
 
+                                //return as array
+                                // return [data.currently, data.daily, data.hourly];
+                            })
+            return cityData;
         },
 
         //SHOW CITIES FOR OTHER MODULES
@@ -62,7 +68,11 @@ const UIController = (function(){
 //HIDE PART
     //NECESSERY DOM ELEMENTS
     const DOMstrings = {
-        selectCityInput: '.select-city'
+        selectCityInput: '.select-city',
+        mainTemp: '.location__degree',
+        mainSummary: '.location__temperature-description',
+        mainTimezone: '.location__timezone',
+        mainIcon: '.location__icon'
     };
 
 
@@ -100,7 +110,6 @@ const UIController = (function(){
 const controller = (function(UICtr, APICtr){
 //HIDE PART
 
-
     //GET DOM FROM UI
     const DOM = UICtr.getDOMstrings();
 
@@ -125,15 +134,33 @@ const controller = (function(UICtr, APICtr){
         let cityNr = document.querySelector(DOM.selectCityInput).value;
 
 
-        // 2. get data from API to city
-        // var cityData = APICtr.getData(cityNr);
+        // 2. get data from API for city - promise
+        var cityData = APICtr.getData(cityNr);
+        cityData
+            .then((data) => {
+                console.log(data);
+                
+                // 3. update main page
 
-        // 3. update main page
-        // 4. create icons
-        // 5. create charts
-        // 6. create days
-        // 7. create hours
+                    //MOVE FUNCTION TO UI CONTROLLER
+                    // a. update temperature
+                    
+                    document.querySelector(DOM.mainTemp).textContent = Math.floor((data.currently.temperature - 32) * (5 / 9));;
 
+                    // b. update summary
+                    document.querySelector(DOM.mainSummary).textContent = data.currently.summary;
+
+                    // c. update timezone
+                    document.querySelector(DOM.mainTimezone).textContent = data.timezone;
+
+                    // d. update icon
+                    setIcons(data.currently.icon, document.querySelector(DOM.mainIcon));
+
+
+                // 5. create charts
+                // 6. create days
+                // 7. create hours
+            });
     };
 
 //VISIBLE PART
@@ -150,10 +177,10 @@ const controller = (function(UICtr, APICtr){
 controller.init();
 
 
+
+
 //COMMENTS 
-
 //HOW TO USE MAP TO GET ARRAY
-
 // const citiesNames = obj.map(function(cur){
             //     return cur.name;
             // });
