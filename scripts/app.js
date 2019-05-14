@@ -7,7 +7,7 @@ return{
 };
 })();
 
-
+//***************************************************************************************************************************************
 const APIController =(function(){
 //HIDE PART
 
@@ -63,7 +63,7 @@ const APIController =(function(){
     };
 })();
 
-
+//***************************************************************************************************************************************
 const UIController = (function(){
 //HIDE PART
     //NECESSERY DOM ELEMENTS
@@ -72,7 +72,9 @@ const UIController = (function(){
         mainTemp: '.location__degree',
         mainSummary: '.location__temperature-description',
         mainTimezone: '.location__timezone',
-        mainIcon: '.location__icon'
+        mainIcon: '.location__icon',
+        chartDaily: '#chart-days',
+        chartHourly: '#chart-hours'
     };
 
 
@@ -98,6 +100,111 @@ const UIController = (function(){
             });
         },
 
+        updateMain: function(temp, sum, time, icon){
+            //input: temperature, summary, timezon, icon 
+
+            // a. update temperature
+            document.querySelector(DOMstrings.mainTemp).textContent = Math.floor((temp - 32) * (5 / 9));
+            // b. update summary
+            document.querySelector(DOMstrings.mainSummary).textContent = sum;
+            // c. update timezone
+            document.querySelector(DOMstrings.mainTimezone).textContent = time;
+            // d. update icon
+            // setIcons(icon, document.querySelector(DOMstrings.mainIcon));
+
+
+        },
+
+        createChartDays: function(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames){
+            //DAILY CHART 
+
+            //data
+            const chartsDaysData = {
+                labels: chartDaysNames,
+                datasets: [{
+                        label: 'Temp Min',
+                        data: chartDaysValuesMin,
+                        borderColor: "#ffffff",
+                        fill: false,
+                        borderWidth: 1.2,
+                        pointStyle: "crossRot",
+                        hoverBorderWidth: 5
+                    },
+                    {
+                        label: 'Temp High',
+                        data: chartDaysValuesMax,
+                        borderColor: "#ffffff",
+                        fill: false,
+                        borderWidth: 1.2,
+                        pointStyle: "crossRot",
+                        hoverBorderWidth: 5
+                    }]
+            }
+
+            //option
+            const chartDaysOptions = {
+                layout: {
+                    padding: {
+                        left: 5,
+                        right: 5,
+                        top: 5,
+                        bottom: 5
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Day by Day - min/max',
+                    fontColor: "#fff",
+                    fontSize: 15
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        color: "#fff",
+                        ticks: {
+                            fontColor: '#fff',
+                            fontSize: 10,
+                            stepValue: 1
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255, 255, 255, 0.1)"
+                        },
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#fff',
+                            fontSize: 10,
+                            //                    minRotation: 45
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+
+            //init
+            const chartDaysCanvas = document.querySelector(DOMstrings.chartDaily);
+            chartDays = new Chart(chartDaysCanvas, {
+                type: 'line',
+                data: chartsDaysData,
+                options: chartDaysOptions,
+            })
+        },
+
+        updateChartsDays: function(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames){
+            
+            chartDays.data.datasets[0].data = chartDaysValuesMin
+            chartDays.data.datasets[1].data = chartDaysValuesMax
+            chartDays.data.labels = chartDaysNames;
+            chartDays.update();
+        },
+
         //RETURN ALL NECESSERY DOM ELEMENTS
         getDOMstrings: function(){
             return DOMstrings;
@@ -106,7 +213,7 @@ const UIController = (function(){
     };
 })();
 
-
+//***************************************************************************************************************************************
 const controller = (function(UICtr, APICtr){
 //HIDE PART
 
@@ -116,6 +223,29 @@ const controller = (function(UICtr, APICtr){
     //EVENT LISTENERS
     const setupEventListeners = function(){
         document.querySelector(DOM.selectCityInput).addEventListener("change", changeCity);
+    };
+
+    //CHANGE TO CELSIUS
+    const changetoCels = function(temp){
+        return Math.floor((temp - 32) * (5 / 9));
+    };
+
+    //GET NAME FROM DAY
+    const dayName = function(dayNum){
+    
+        let date = new Date(dayNum * 1000);
+        let day = date.getDay()
+        
+        const names = [] 
+        names[0] = "Sunday"
+        names[1] = "Monday"
+        names[2] = "Tuesday"
+        names[3] = "Wednesday"
+        names[4] = "Thursday"
+        names[5] = "Friday"
+        names[6] = "Saturday"
+        
+        return names[day];
     };
 
 
@@ -128,36 +258,37 @@ const controller = (function(UICtr, APICtr){
     };
 
     //MAIN FUNCTION CHANGE CITY
-    const changeCity = function(){
-        
-        // 1. get current value from input after change
-        let cityNr = document.querySelector(DOM.selectCityInput).value;
+    const changeCity = function(check="next"){
 
+        // 1. GET CURRENT VALUE FROM INPUT
+        //onload always 0, next checking input value
+        if(check === "start"){ var cityNr = 0; }
+        else{ var cityNr = document.querySelector(DOM.selectCityInput).value;};
 
-        // 2. get data from API for city - promise
+        // 3. GET DATA FROM API FOR CITY - PROMISE
         var cityData = APICtr.getData(cityNr);
         cityData
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 
-                // 3. update main page
-
-                    //MOVE FUNCTION TO UI CONTROLLER
-                    // a. update temperature
-                    
-                    document.querySelector(DOM.mainTemp).textContent = Math.floor((data.currently.temperature - 32) * (5 / 9));;
-
-                    // b. update summary
-                    document.querySelector(DOM.mainSummary).textContent = data.currently.summary;
-
-                    // c. update timezone
-                    document.querySelector(DOM.mainTimezone).textContent = data.timezone;
-
-                    // d. update icon
-                    setIcons(data.currently.icon, document.querySelector(DOM.mainIcon));
+                // 3. UPDATE MAIN PAGE
+                // pass 4 data: - temperature, summary, timezone, icon 
+                UICtr.updateMain(data.currently.temperature, data.currently.summary, data.timezone, data.currently.icon);
 
 
-                // 5. create charts
+                // 4. CREATE CHARTS
+                //pass data: arr:minTemp, arr:maxTemp, arr:dayName
+                const chartDaysValuesMin = data.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:minTemp
+                const chartDaysValuesMax = data.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:maxTemp
+                const chartDaysNames = data.daily.data.map((cur)=> dayName(cur.time)); //get arr:dayName
+                //if first load chart is created, next updated
+                if (check === "start"){
+                    UICtr.createChartDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);} //put into function
+                else{
+                    UICtr.updateChartsDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);};//put into function
+
+
+
                 // 6. create days
                 // 7. create hours
             });
@@ -169,7 +300,7 @@ const controller = (function(UICtr, APICtr){
             //ON LOAD FIRST UPDATE
             setupEventListeners();
             createCityInput();
-            // changeCity();
+            changeCity("start");
         }
     }
 })(UIController, APIController);

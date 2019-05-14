@@ -71,7 +71,6 @@ const chart1 = function (valuesDayHigh, valuesDayMin, valuesDayName) {
         maintainAspectRatio: false,
     }
 
-
     const chartDayCanvas = document.querySelector("#chart-day");
     
     const chartDay = new Chart(chartDayCanvas, {
