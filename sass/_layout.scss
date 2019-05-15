@@ -54,6 +54,7 @@
     //time area
     &__time{
         font-size: 3rem;
+        flex: 0 0 30%;
         
         display: flex;
         flex-direction: column;
@@ -63,11 +64,13 @@
     //icon area
     &__icon{
         // width: 15rem;
+        flex: 0 0 30%;
     }
 
 
     //temperature area
     &__temperature{
+        flex: 0 0 40%;
 
         display: flex;
         flex-direction: column;
@@ -120,12 +123,7 @@
     &__chart{
         height: 25rem;
         width: 45%;
-
-        //test
-        &:nth-child(2){
-            background-color: rgba(255, 255, 255, 0.459);
-        }
-
+   
         &:first-child{
             margin-bottom: 2rem;
         }
