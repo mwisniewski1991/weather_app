@@ -1,12 +1,3 @@
-const chartsController = (function(){
-//HIDE PART
-
-//VISIBLE PART
-return{
-
-};
-})();
-
 //***************************************************************************************************************************************
 const APIController =(function(){
 //HIDE PART
@@ -77,9 +68,25 @@ const UIController = (function(){
         chartHourly: '#chart-hours'
     };
 
+    const chartHoursTempMinMax = function(chartHoursValues){
+        //calculate ticks for better UI if diffrence between temp if too low chart do not show diffrence in good way
+        let tempMin = Math.min(...chartHoursValues);
+        let tempMax = Math.max(...chartHoursValues);
+
+        if(tempMax >= tempMin + 5){
+            tempMax += 2;
+        }
+        else{
+            tempMax = tempMin + 5;
+        }
+
+        return [tempMin, tempMax]
+    };
+
 
 //VISIBLE PART
     return{
+        //CREATE INPUT BASED ON CITY LIS
         createCityList: function(obj){
             // 1. INSERT HTML FOR EACH CITY
             //html to insert
@@ -100,6 +107,7 @@ const UIController = (function(){
             });
         },
 
+        //CREATE MAIN PAGE
         updateMain: function(temp, sum, time, icon){
             //input: temperature, summary, timezon, icon 
 
@@ -115,10 +123,11 @@ const UIController = (function(){
 
         },
 
+        //CREATE DAYS CHART
         createChartDays: function(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames){
             //DAILY CHART 
 
-            //data
+            //data days
             const chartsDaysData = {
                 labels: chartDaysNames,
                 datasets: [{
@@ -141,8 +150,9 @@ const UIController = (function(){
                     }]
             }
 
+            
             //option
-            const chartDaysOptions = {
+            const chartOptions = {
                 layout: {
                     padding: {
                         left: 5,
@@ -188,21 +198,112 @@ const UIController = (function(){
                 maintainAspectRatio: false,
             }
 
-            //init
+
+            // init
             const chartDaysCanvas = document.querySelector(DOMstrings.chartDaily);
             chartDays = new Chart(chartDaysCanvas, {
                 type: 'line',
                 data: chartsDaysData,
-                options: chartDaysOptions,
+                options: chartOptions
             })
+
+           
         },
 
+        //CREATE HOURS DAY
+        createChartHours: function(chartHoursValues, chartHoursTime){
+
+            //data hours
+            const chartHoursData = {
+                labels: chartHoursTime,
+                datasets: [{
+                        label: 'Temp',
+                        data: chartHoursValues,
+                        borderColor: "#ffffff",
+                        fill: false,
+                        borderWidth: 1.2,
+                        pointStyle: "crossRot",
+                        hoverBorderWidth: 5}]
+            }
+
+            //option
+            const chartOptions = {
+                layout: {
+                    padding: {
+                        left: 5,
+                        right: 5,
+                        top: 5,
+                        bottom: 5
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Day by Day - min/max',
+                    fontColor: "#fff",
+                    fontSize: 15
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        color: "#fff",
+                        ticks: {
+                            fontColor: '#fff',
+                            fontSize: 10,
+                            stepValue: 1,
+                            min: chartHoursTempMinMax(chartHoursValues)[0], //calculate max temp to show for better viwe
+                            max: chartHoursTempMinMax(chartHoursValues)[1]
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255, 255, 255, 0.1)"
+                        },
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#fff',
+                            fontSize: 10,
+                            //                    minRotation: 45
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+
+             //init
+             const chartHourCanvas = document.querySelector(DOMstrings.chartHourly);
+             chartHours = new Chart(chartHourCanvas, {
+                 type: 'line',
+                 data: chartHoursData,
+                 options: chartOptions
+             })
+        },
+
+        //UPDATE DAYS CHART
         updateChartsDays: function(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames){
             
             chartDays.data.datasets[0].data = chartDaysValuesMin
             chartDays.data.datasets[1].data = chartDaysValuesMax
             chartDays.data.labels = chartDaysNames;
             chartDays.update();
+        },
+
+        //UPDATE HOURS CHART
+        updateHoursDays: function(chartHoursValues, chartHoursTime){
+            
+            const c = chartHoursTempMinMax(chartHoursValues);
+
+            chartHours.data.datasets[0].data = chartHoursValues; //update data
+            chartHours.data.labels = chartHoursTime; //update labels
+            chartHours.config.options.scales.yAxes[0].ticks.min = chartHoursTempMinMax(chartHoursValues)[0]; //update min temp
+            chartHours.config.options.scales.yAxes[0].ticks.max = chartHoursTempMinMax(chartHoursValues)[1]; //update max temp
+
+            chartHours.update();
         },
 
         //RETURN ALL NECESSERY DOM ELEMENTS
@@ -262,14 +363,13 @@ const controller = (function(UICtr, APICtr){
 
         // 1. GET CURRENT VALUE FROM INPUT
         //onload always 0, next checking input value
-        if(check === "start"){ var cityNr = 0; }
-        else{ var cityNr = document.querySelector(DOM.selectCityInput).value;};
+        check === "start" ? cityNr = 0 : cityNr = document.querySelector(DOM.selectCityInput).value;
 
         // 3. GET DATA FROM API FOR CITY - PROMISE
         var cityData = APICtr.getData(cityNr);
         cityData
             .then((data) => {
-                // console.log(data);
+                console.log(data);
                 
                 // 3. UPDATE MAIN PAGE
                 // pass 4 data: - temperature, summary, timezone, icon 
@@ -277,16 +377,25 @@ const controller = (function(UICtr, APICtr){
 
 
                 // 4. CREATE CHARTS
-                //pass data: arr:minTemp, arr:maxTemp, arr:dayName
-                const chartDaysValuesMin = data.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:minTemp
-                const chartDaysValuesMax = data.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:maxTemp
+                
+                //pass day data: arr:dayMinTemp, arr:dayMaxTemp, arr:dayName, arr:hourTemp
+                const chartDaysValuesMin = data.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:dayMinTemp
+                const chartDaysValuesMax = data.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:dayMaxTemp
                 const chartDaysNames = data.daily.data.map((cur)=> dayName(cur.time)); //get arr:dayName
+
+                //pass hour data: arr:hourTemp, arr:hourTime
+                const chartHoursValues = data.hourly.data.splice(0,8).map((cur) => changetoCels(cur.temperature)) //get arr:hourTemp = 8 values
+                const chartHoursTime = data.hourly.data.splice(0,8).map((cur) => new Date(cur.time * 1000).getHours()+":00"); //get arr:hourTime = 8 value
+                
                 //if first load chart is created, next updated
                 if (check === "start"){
-                    UICtr.createChartDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);} //put into function
+                    UICtr.createChartDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);
+                    UICtr.createChartHours(chartHoursValues, chartHoursTime);} //put into function
                 else{
-                    UICtr.updateChartsDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);};//put into function
+                    UICtr.updateChartsDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames, chartHoursValues, chartHoursTime);
+                    UICtr.updateHoursDays(chartHoursValues, chartHoursTime);};//put into function
 
+                
 
 
                 // 6. create days
