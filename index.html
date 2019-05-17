@@ -39,19 +39,20 @@
         <div class="location">
 
             <div class="location__time">
-                <span class="location__timezone">Time zone</span>
+                <span class="location__timezone">---</span>
                 <span class="location__time-gmt">00:00:00</span>
             </div>
 
             <div class="location__temperature">
                 <div class="location__degree-section">
-                    <span class="location__degree">34</span>
+                    <span class="location__degree">-</span>
                     <span class="location__span">C</span>
                 </div>
-                <div class="location__temperature-description">Its freaking cold</div>
+                <div class="location__temperature-description">Loading...</div>
             </div>
-
-            <canvas class="location__icon" width="128" height="128"></canvas>
+            <div class="location__icon">
+                <canvas class="location__canvas" width="128" height="128"></canvas>
+            </div>            
         </div>
 
         <!--        --------------------------------------------------------->
@@ -88,82 +89,60 @@
                     <div class="days__temp-min">Min temp</div>
                     <div class="days__temp-high">Max temp</div>
                 </div>
-                <div class="days__day" id="d">
+
+                <!-- <div class="days__day" id="d">
                     <div class="days__date">2019.03.05</div>
                     <div class="days__name">Monday</div>
                     <div class="days__icon">Icon</div>
                     <div class="days__summary">Summary Summary Summary</div>
                     <div class="days__temp-min">5</div>
                     <div class="days__temp-high">25</div>
-                </div>
-                <div class="days__day" id="d">
-                    <div class="days__date">2019.03.05</div>
-                    <div class="days__name">Monday</div>
-                    <div class="days__icon">Icon</div>
-                    <div class="days__summary">Summary Summary Summary</div>
-                    <div class="days__temp-min">5</div>
-                    <div class="days__temp-high">25</div>
-                </div>
-                <div class="days__day" id="d">
-                    <div class="days__date">2019.03.05</div>
-                    <div class="days__name">Monday</div>
-                    <div class="days__icon">Icon</div>
-                    <div class="days__summary">Summary Summary Summary</div>
-                    <div class="days__temp-min">5</div>
-                    <div class="days__temp-high">25</div>
-                </div>
-                <div class="days__day" id="d">
-                    <div class="days__date">2019.03.05</div>
-                    <div class="days__name">Monday</div>
-                    <div class="days__icon">Icon</div>
-                    <div class="days__summary">Summary Summary Summary</div>
-                    <div class="days__temp-min">5</div>
-                    <div class="days__temp-high">25</div>
-                </div>
+                </div> -->
 
             </div>
 
         </div>
 
 
-        <div class="hours hourly">
+        <div class="hours">
 
             <h2 class="heading-two">Hour by Hour</h2>
 
             <div class="hours__details">
 
-                <div class="hours__hour hour" id="h">
+                <div class="hours__hour" id="h">
                     <div class="hours__time">Hour</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary</div>
                     <div class="hours__temp">Temp</div>
                 </div>
 
-                <div class="hours__hour hour" id="h">
+                <div class="hours__hour" id="h">
                     <div class="hours__time">08:00</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary Summary</div>
                     <div class="hours__temp">28</div>
                 </div>
-                <div class="hours__hour hour" id="h">
+
+                <div class="hours__hour" id="h">
                     <div class="hours__time">08:00</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary Summary</div>
                     <div class="hours__temp">28</div>
                 </div>
-                <div class="hours__hour hour" id="h">
+                <div class="hours__hour" id="h">
                     <div class="hours__time">08:00</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary Summary</div>
                     <div class="hours__temp">28</div>
                 </div>
-                <div class="hours__hour hour" id="h">
+                <div class="hours__hour" id="h">
                     <div class="hours__time">08:00</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary Summary</div>
                     <div class="hours__temp">28</div>
                 </div>
-                <div class="hours__hour hour" id="h">
+                <div class="hours__hour" id="h">
                     <div class="hours__time">08:00</div>
                     <div class="hours__icon">Icon</div>
                     <div class="hours__summary">Summary Summary</div>
