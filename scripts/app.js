@@ -63,11 +63,14 @@ const UIController = (function(){
         mainTemp: '.location__degree',
         mainSummary: '.location__temperature-description',
         mainTimezone: '.location__timezone',
-        mainIcon: '.location__icon',
+        mainIcon: '.location__canvas',
         chartDaily: '#chart-days',
-        chartHourly: '#chart-hours'
+        chartHourly: '#chart-hours',
+        daysList: '.days__details',
+        hoursList: '.hours__details'
     };
 
+    //CALCULATE MIN MAX TEMP FOR HOURS CHART
     const chartHoursTempMinMax = function(chartHoursValues){
         //calculate ticks for better UI if diffrence between temp if too low chart do not show diffrence in good way
         let tempMin = Math.min(...chartHoursValues);
@@ -82,6 +85,17 @@ const UIController = (function(){
 
         return [tempMin, tempMax]
     };
+
+    //FUNCTION FOR ICONS
+    const setIcon = function(icon, iconID) {
+        const skycons = new Skycons({
+            color: 'white'
+        });
+        const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconID, Skycons[currentIcon]);
+    };
+
 
 
 //VISIBLE PART
@@ -118,7 +132,7 @@ const UIController = (function(){
             // c. update timezone
             document.querySelector(DOMstrings.mainTimezone).textContent = time;
             // d. update icon
-            // setIcons(icon, document.querySelector(DOMstrings.mainIcon));
+            setIcon(icon, document.querySelector(DOMstrings.mainIcon));
 
 
         },
@@ -298,13 +312,54 @@ const UIController = (function(){
             
             const c = chartHoursTempMinMax(chartHoursValues);
 
-            chartHours.data.datasets[0].data = chartHoursValues; //update data
+            chartHours.data.datasets[0].data = chartHoursValues; //update datasets
             chartHours.data.labels = chartHoursTime; //update labels
             chartHours.config.options.scales.yAxes[0].ticks.min = chartHoursTempMinMax(chartHoursValues)[0]; //update min temp
             chartHours.config.options.scales.yAxes[0].ticks.max = chartHoursTempMinMax(chartHoursValues)[1]; //update max temp
 
             chartHours.update();
         },
+
+        updateDaysList: function(daysListDate, daysListDayname, daysListIcon, daysListSummary, daysListMinTemp, daysListMaxTemp){
+
+            const html = '<div class="days__day" id="d%id%"><div class="days__date">%date%</div><div class="days__name">%dayname%</div><div class="days__icon"></div><div class="days__summary">%summary%</div><div class="days__temp-min">%minTemp%</div><div class="days__temp-high">%maxTemp%</div></div>'
+
+            const daysList = document.querySelector(DOMstrings.daysList);
+
+            //FOR LOOPS TO CREATE 8 DIVS
+            for(let i = 0; i<8; i++){
+
+                let newHtml; //create new html to change template
+
+                //create variable which will be insert to newHtml
+                const id = i;
+                const date = daysListDate[i]; 
+                const dayname = daysListDayname[i];
+                const icon = daysListIcon[i];
+                const summary = daysListSummary[i];
+                const minTemp = daysListMinTemp[i];
+                const maxTemp = daysListMaxTemp[i];
+
+                newHtml = html.replace('%id%', id); //create id for icon
+                newHtml = newHtml.replace('%date%', date); //insert date
+                newHtml = newHtml.replace('%dayname%', dayname); //insert day name
+                newHtml = newHtml.replace('%summary%', summary); //insert summery
+                newHtml = newHtml.replace('%minTemp%', minTemp); //insert min temperature
+                newHtml = newHtml.replace('%maxTemp%', maxTemp); //insert max temperature
+
+                //icon
+
+                //add newHtml at the end 
+                daysList.insertAdjacentHTML('beforeend', newHtml);
+
+                // console.log('#d'+id);
+                const div = document.querySelector("#d"+id);
+                console.log(div);
+
+                setIcon(icon, document.querySelector("#d0"));
+
+            }
+        }, 
 
         //RETURN ALL NECESSERY DOM ELEMENTS
         getDOMstrings: function(){
@@ -368,24 +423,26 @@ const controller = (function(UICtr, APICtr){
         // 3. GET DATA FROM API FOR CITY - PROMISE
         var cityData = APICtr.getData(cityNr);
         cityData
-            .then((data) => {
-                console.log(data);
+            .then((weatData) => {
+
+                //testint
+                // console.log(weatData);
                 
+
                 // 3. UPDATE MAIN PAGE
                 // pass 4 data: - temperature, summary, timezone, icon 
-                UICtr.updateMain(data.currently.temperature, data.currently.summary, data.timezone, data.currently.icon);
+                UICtr.updateMain(weatData.currently.temperature, weatData.currently.summary, weatData.timezone, weatData.currently.icon);
 
 
                 // 4. CREATE CHARTS
-                
                 //pass day data: arr:dayMinTemp, arr:dayMaxTemp, arr:dayName, arr:hourTemp
-                const chartDaysValuesMin = data.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:dayMinTemp
-                const chartDaysValuesMax = data.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:dayMaxTemp
-                const chartDaysNames = data.daily.data.map((cur)=> dayName(cur.time)); //get arr:dayName
+                const chartDaysValuesMin = weatData.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:dayMinTemp
+                const chartDaysValuesMax = weatData.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:dayMaxTemp
+                const chartDaysNames = weatData.daily.data.map((cur)=> dayName(cur.time)); //get arr:dayName
 
                 //pass hour data: arr:hourTemp, arr:hourTime
-                const chartHoursValues = data.hourly.data.splice(0,8).map((cur) => changetoCels(cur.temperature)) //get arr:hourTemp = 8 values
-                const chartHoursTime = data.hourly.data.splice(0,8).map((cur) => new Date(cur.time * 1000).getHours()+":00"); //get arr:hourTime = 8 value
+                const chartHoursValues = weatData.hourly.data.splice(0,8).map((cur) => changetoCels(cur.temperature)) //get arr:hourTemp = 8 values
+                const chartHoursTime = weatData.hourly.data.splice(0,8).map((cur) => new Date(cur.time * 1000).getHours()+":00"); //get arr:hourTime = 8 value
                 
                 //if first load chart is created, next updated
                 if (check === "start"){
@@ -395,11 +452,28 @@ const controller = (function(UICtr, APICtr){
                     UICtr.updateChartsDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames, chartHoursValues, chartHoursTime);
                     UICtr.updateHoursDays(chartHoursValues, chartHoursTime);};//put into function
 
+
+                // 6. CREATE DAYS
+                //pass day data: date, dayName, icon, summary, minTemp, max temp
+                {
+                    //destructuring
+                    const {daily:{data}} = weatData;
+                    console.log(data);
+
+                    const daysListDate = data.map((cur)=> new Date(cur.time * 1000).toLocaleDateString());
+                    const daysListDayname = data.map((cur) => dayName(cur.time));
+                    const daysListIcon = data.map((cur) => cur.icon);
+                    const daysListSummary = data.map((cur) => cur.summary);
+                    const daysListMinTemp = data.map((cur) => changetoCels(cur.temperatureLow));
+                    const daysListMaxTemp = data.map((cur) => changetoCels(cur.temperatureHigh));
+
+                    UICtr.updateDaysList(daysListDate, daysListDayname, daysListIcon, daysListSummary, daysListMinTemp, daysListMaxTemp);
+
+                }
                 
 
-
-                // 6. create days
                 // 7. create hours
+
             });
     };
 
