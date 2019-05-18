@@ -320,14 +320,22 @@ const UIController = (function(){
             chartHours.update();
         },
 
+        //UPDATE DAYS LIST
         updateDaysList: function(daysListDate, daysListDayname, daysListIcon, daysListSummary, daysListMinTemp, daysListMaxTemp){
 
-            const html = '<div class="days__day" id="d%id%"><div class="days__date">%date%</div><div class="days__name">%dayname%</div><div class="days__icon"></div><div class="days__summary">%summary%</div><div class="days__temp-min">%minTemp%</div><div class="days__temp-high">%maxTemp%</div></div>'
+            //templete html
+            const htmlFirst = '<div class="days__day"><div class="days__date">Date</div><div class="days__name">Day</div><div class="days__icon">Icon</div><div class="days__summary">Summary</div><div class="days__temp-min">Min temp</div><div class="days__temp-high">Max temp</div></div>';
 
+            const html = '<div class="days__day" id="d"><div class="days__date">%date%</div><div class="days__name">%dayname%</div><div class="days__icon"><canvas class="location__canvas" id="d%id%" width="64" height="64"></canvas></div><div class="days__summary">%summary%</div><div class="days__temp-min">%minTemp%</div><div class="days__temp-high">%maxTemp%</div></div>'
+
+            //place to put all elements
             const daysList = document.querySelector(DOMstrings.daysList);
 
+            daysList.innerHTML = "";
+            daysList.insertAdjacentHTML("beforeend", htmlFirst);
+
             //FOR LOOPS TO CREATE 8 DIVS
-            for(let i = 0; i<8; i++){
+            for(let i = 0; i < daysListDate.length ; i++){
 
                 let newHtml; //create new html to change template
 
@@ -347,19 +355,52 @@ const UIController = (function(){
                 newHtml = newHtml.replace('%minTemp%', minTemp); //insert min temperature
                 newHtml = newHtml.replace('%maxTemp%', maxTemp); //insert max temperature
 
-                //icon
 
                 //add newHtml at the end 
                 daysList.insertAdjacentHTML('beforeend', newHtml);
 
-                // console.log('#d'+id);
-                const div = document.querySelector("#d"+id);
-                console.log(div);
-
-                setIcon(icon, document.querySelector("#d0"));
+                //add icon to the created html
+                setIcon(icon, document.querySelector("#d"+id));
 
             }
         }, 
+
+        //UPDATE HOURS LIST
+        updateHoursList: function(hoursListTime, hoursListIcon, hoursListSummary, hoursListTemp){
+            //templete html
+            const htmlFirst = '<div class="hours__hour"><div class="hours__time">Hour</div><div class="hours__icon">Icon</div><div class="hours__summary">Summary</div><div class="hours__temp">Temp</div></div>'
+
+            const html = '<div class="hours__hour"><div class="hours__time">%time%</div><div class="hours__icon"><canvas class="location__canvas" id="h%id%" width="64" height="64"></canvas></div><div class="hours__summary">%summary%</div><div class="hours__temp">%temp%</div></div>'
+
+            //place to put all elements
+            const hoursList= document.querySelector(DOMstrings.hoursList);
+
+            hoursList.innerHTML = "";
+            hoursList.insertAdjacentHTML('beforeend', htmlFirst);;
+
+            //FOR LOOPS TO CREATE 17 DIVS
+            for(let i = 0; i < hoursListTime.length; i++){
+
+                let newHtml; //create new html to change template
+
+                const id = i; 
+                const time = hoursListTime[i];
+                const icon = hoursListIcon[i];
+                const summary = hoursListSummary[i];
+                const temp = hoursListTemp[i];
+
+                newHtml = html.replace('%id%', id); //create id for icon
+                newHtml = newHtml.replace('%time%', time); //insert time
+                newHtml = newHtml.replace('%summary%', summary); //insert summary
+                newHtml = newHtml.replace('%temp%', temp); //insert temperature
+
+                //add newHtml at the end 
+                hoursList.insertAdjacentHTML("beforeend", newHtml);
+
+                //add icon to the created html
+                setIcon(icon, document.querySelector("#h"+id));
+            }
+        },
 
         //RETURN ALL NECESSERY DOM ELEMENTS
         getDOMstrings: function(){
@@ -420,12 +461,15 @@ const controller = (function(UICtr, APICtr){
         //onload always 0, next checking input value
         check === "start" ? cityNr = 0 : cityNr = document.querySelector(DOM.selectCityInput).value;
 
+        // cities = APICtr.getCities();
+        // console.log(cities[cityNr]);
+
         // 3. GET DATA FROM API FOR CITY - PROMISE
         var cityData = APICtr.getData(cityNr);
         cityData
             .then((weatData) => {
 
-                //testint
+                //test
                 // console.log(weatData);
                 
 
@@ -435,15 +479,27 @@ const controller = (function(UICtr, APICtr){
 
 
                 // 4. CREATE CHARTS
+                {
                 //pass day data: arr:dayMinTemp, arr:dayMaxTemp, arr:dayName, arr:hourTemp
                 const chartDaysValuesMin = weatData.daily.data.map((cur) => changetoCels(cur.temperatureLow)); //get arr:dayMinTemp
                 const chartDaysValuesMax = weatData.daily.data.map((cur) => changetoCels(cur.temperatureHigh)); //get arr:dayMaxTemp
                 const chartDaysNames = weatData.daily.data.map((cur)=> dayName(cur.time)); //get arr:dayName
 
                 //pass hour data: arr:hourTemp, arr:hourTime
-                const chartHoursValues = weatData.hourly.data.splice(0,8).map((cur) => changetoCels(cur.temperature)) //get arr:hourTemp = 8 values
-                const chartHoursTime = weatData.hourly.data.splice(0,8).map((cur) => new Date(cur.time * 1000).getHours()+":00"); //get arr:hourTime = 8 value
+                const chartHoursValues = weatData.hourly.data.slice(0,8).map((cur) => changetoCels(cur.temperature)) //get arr:hourTemp = 8 values
                 
+                //MAKE FUNCTION!!!!!!!!!!!!!!!!!
+                const chartHoursTime =  weatData.hourly.data.slice(0,8).map((cur)=> {
+                    let gmt = APICtr.getCities()[cityNr].gmt //get gtm for current city
+
+                    let time = new Date(cur.time * 1000); //create date object
+                    time.setHours(time.getHours() + gmt); //correct time with gmt
+
+                    return time.getHours() + ":00"; //return time with correct formatting
+                })
+
+
+
                 //if first load chart is created, next updated
                 if (check === "start"){
                     UICtr.createChartDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames);
@@ -451,14 +507,14 @@ const controller = (function(UICtr, APICtr){
                 else{
                     UICtr.updateChartsDays(chartDaysValuesMin, chartDaysValuesMax, chartDaysNames, chartHoursValues, chartHoursTime);
                     UICtr.updateHoursDays(chartHoursValues, chartHoursTime);};//put into function
+                }
 
-
-                // 6. CREATE DAYS
-                //pass day data: date, dayName, icon, summary, minTemp, max temp
+                // 6. CREATE DAY LIST
                 {
+                //pass days data: date, dayName, icon, summary, minTemp, max temp
+                
                     //destructuring
                     const {daily:{data}} = weatData;
-                    console.log(data);
 
                     const daysListDate = data.map((cur)=> new Date(cur.time * 1000).toLocaleDateString());
                     const daysListDayname = data.map((cur) => dayName(cur.time));
@@ -471,9 +527,33 @@ const controller = (function(UICtr, APICtr){
 
                 }
                 
+                // 7. CREATE HOURS LIST
+                
+                {
+                //pass hours data: time, icon, summary, temp
+                    //destructuring
+                    let {hourly:{data}} = weatData;                    
 
-                // 7. create hours
+                    // reduce date to 17 elements
+                    data = data.splice(0, 17);
+                    
+                    //get needed data
+                    const hoursListIcon = data.map((cur)=> cur.icon);
+                    const hoursListSummary = data.map((cur) => cur.summary);
+                    const hoursListTemp = data.map((cur)=> changetoCels(cur.temperature));
+                    const hoursListTime =  data.map((cur)=> {
+                        let gmt = APICtr.getCities()[cityNr].gmt //get gtm for current city
 
+                        let time = new Date(cur.time * 1000); //create date object
+                        time.setHours(time.getHours() + gmt); //correct time with gmt
+
+                        return time.getHours() + ":00"; //return time with correct formatting
+                    });
+
+                    //pass date to function
+                    UICtr.updateHoursList(hoursListTime, hoursListIcon, hoursListSummary, hoursListTemp);
+                }
+                
             });
     };
 

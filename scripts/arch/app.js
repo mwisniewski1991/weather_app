@@ -114,10 +114,11 @@ const refresh = (lat, long, gmt=0) => {
                         
                         let div = document.querySelector(`#h${i}`)
                             
-                        //temporart variables to set gour for each gmt
+                        //temporart variables to set hour for each gmt
                         let tempTime = new Date(time * 1000);
                         tempTime.setHours(tempTime.getHours() + gmt);
                         div.querySelector(".hour-hour").textContent = tempTime.getHours();
+                        
                         setIcons(icon, div.querySelector(".hour-icon"));
                         div.querySelector(".hour-summary").textContent = summary;
                         div.querySelector(".hour-temp").textContent = Math.floor((temperature - 32) *(5 / 9));
