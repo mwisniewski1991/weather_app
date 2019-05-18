@@ -269,7 +269,7 @@
         flex-direction: column;
         flex-wrap: wrap;
 
-        height: 40vh;
+        height: 100vh;
     }
 
     &__hour{
@@ -312,5 +312,9 @@
 
     &__temp{
         flex: 0 0 15%;
+
+        &::after{
+            content: " C";
+        }
     }
 }
