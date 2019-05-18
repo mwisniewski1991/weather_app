@@ -67,7 +67,8 @@ const UIController = (function(){
         chartDaily: '#chart-days',
         chartHourly: '#chart-hours',
         daysList: '.days__details',
-        hoursList: '.hours__details'
+        hoursList: '.hours__details',
+        clock: '.location__time-gmt'
     };
 
     //CALCULATE MIN MAX TEMP FOR HOURS CHART
@@ -176,7 +177,7 @@ const UIController = (function(){
                     }
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Day by Day - min/max',
                     fontColor: "#fff",
                     fontSize: 15
@@ -189,8 +190,7 @@ const UIController = (function(){
                         color: "#fff",
                         ticks: {
                             fontColor: '#fff',
-                            fontSize: 10,
-                            stepValue: 1
+                            fontSize: 10
                         },
                         gridLines: {
                             display: true,
@@ -251,13 +251,13 @@ const UIController = (function(){
                     }
                 },
                 title: {
-                    display: true,
-                    text: 'Day by Day - min/max',
+                    display: false,
+                    text: 'Hours by hours',
                     fontColor: "#fff",
                     fontSize: 15
                 },
                 legend: {
-                    display: false,
+                    display: false
                 },
                 scales: {
                     yAxes: [{
@@ -265,7 +265,7 @@ const UIController = (function(){
                         ticks: {
                             fontColor: '#fff',
                             fontSize: 10,
-                            stepValue: 1,
+                            stepSize: 1,
                             min: chartHoursTempMinMax(chartHoursValues)[0], //calculate max temp to show for better viwe
                             max: chartHoursTempMinMax(chartHoursValues)[1]
                         },
@@ -400,6 +400,16 @@ const UIController = (function(){
                 //add icon to the created html
                 setIcon(icon, document.querySelector("#h"+id));
             }
+        },
+
+        //UPDATE CLOCK DIV
+        updateClock: function(hour, min, sec){
+            
+            //get div with time
+            clockDiv = document.querySelector(DOMstrings.clock);
+
+            //put time into text
+            clockDiv.textContent = `${hour}:${min}:${sec}`
         },
 
         //RETURN ALL NECESSERY DOM ELEMENTS
@@ -553,31 +563,51 @@ const controller = (function(UICtr, APICtr){
                     //pass date to function
                     UICtr.updateHoursList(hoursListTime, hoursListIcon, hoursListSummary, hoursListTemp);
                 }
+
+                // 8. CLOCK
+                controller.clock();
                 
             });
     };
 
 //VISIBLE PART
     return{
+        //UPDATE CLOCK TIME
+        clock: function(){
+            //set new date
+            let today = new Date();
+            
+            //correct time by gmt
+            today.setHours(today.getHours() + APICtr.getCities()[cityNr].gmt);
+            
+            //set hour, min, seconds to variable
+            let hour =today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+            
+            //if for time under 10 make better view
+            if (hour<10) hour = `0${hour}`;
+            if (min<10) min = `0${min}`;
+            if (sec<10) sec = `0${sec}`;
+            
+            //pass to the data
+            
+            UICtr.updateClock(hour, min, sec);
+            
+            //wait 1s and reload function
+            setTimeout("controller.clock()", 1000);
+
+        },
+
         init: function(){
             //ON LOAD FIRST UPDATE
             setupEventListeners();
             createCityInput();
             changeCity("start");
+            // clock();
+            controller.clock();
         }
     }
 })(UIController, APIController);
 
 controller.init();
-
-
-
-
-//COMMENTS 
-//HOW TO USE MAP TO GET ARRAY
-// const citiesNames = obj.map(function(cur){
-            //     return cur.name;
-            // });
-
-            //short version of above
-            // const citiesNames = obj.map(cur => cur.name);
