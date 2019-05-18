@@ -186,7 +186,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 40vh; }
+    height: 100vh; }
   .hours__hour {
     width: 45%;
     height: 10vh;
@@ -211,6 +211,8 @@ body {
     flex: 1; }
   .hours__temp {
     flex: 0 0 15%; }
+    .hours__temp::after {
+      content: " C"; }
 
 .heading-one {
   font-size: 5rem;
