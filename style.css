@@ -1,0 +1,454 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body
+{
+    height: 100vh;
+    font-family: 'Aleo', serif;
+    color: #fff;
+}
+
+
+/*NAV----------------------------------------------------------*/
+
+.top_div
+{
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 5%;
+}
+
+nav
+{
+    
+    height: 40px;
+    width: 220px;
+    position: relative;
+}
+
+nav select
+{
+    border: none;
+    width: 220px;
+    height: 40px;
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: button;
+/*    background-color: rgb(56, 86, 248);*/
+    background: transparent;
+    box-shadow: 2px 2px 2px 1px #000;
+    color: #fff;
+    font-family: 'Aleo', serif;
+    font-size: 20px;
+}
+
+nav:before
+{
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    content: '\f358';
+    background-color: rgb(20, 67, 147);
+    font-family: "Font Awesome 5 Free";
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+}
+
+nav:hover:before
+{
+   background-color: rgb(56, 86, 248); 
+}
+
+nav option
+{
+    background-color: rgb(56, 86, 248);
+}
+
+/*OVERALL ----------------------------------------------------*/
+.overall
+{
+    height: 100vh;
+    background: linear-gradient(rgb(56, 86, 248), rgb(10, 20, 74));
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+}
+
+.location, 
+.temperature
+{
+    height: 30vh;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.chart-temp
+{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.chart
+{
+    width: 40%;
+    padding: 5px 10px;
+    position: relative;
+}
+
+.time-gmt
+{
+    text-align: center;
+}
+
+.temperature
+{
+    flex-direction: column;
+    width: 20%;
+}
+
+.degree-section
+{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.degree-section span
+{
+    margin: 10px;
+    font-size: 30px;
+}
+
+.degree-section h2
+{
+    font-size: 40px;
+}
+
+footer
+{
+    height: 10vh;
+    padding: 20px;
+    text-align: center;
+}
+
+
+/*DETAILS-----------------------------------------------------*/
+
+.details
+{
+/*    overflow: hidden;*/
+}
+
+.move-div
+{
+/*    width: 200vw;*/
+/*    display: flex;*/
+}
+
+.daily
+{
+/*    height: 100vh;*/
+/*    width: 50%;*/
+    background: linear-gradient(rgb(10, 20, 74), rgb(56, 86, 248));
+}
+
+.hourly
+{
+/*    height: 100vh;*/
+/*    width: 50%;*/
+    background: linear-gradient(rgb(56, 86, 248), rgb(10, 20, 74));
+}
+
+.hours-details
+{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.day, .hour
+{
+    width: 90%;
+    height: 10vh;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px dashed #fff;
+}
+
+.hour
+{
+    width: 45%;
+}
+
+
+.day:not(:first-child):hover, .hour:not(:first-child):hover
+{
+    background: rgba($color-black, 0.05);
+}
+
+
+
+/*------------------------------------------*/
+.top
+{
+    height: 10vh;
+    padding: 20px 0px;
+    text-align: center;
+}
+
+#d
+{
+    font-weight: bold;
+}
+
+.day-date, .day-name
+{
+    width: 5%;
+}
+
+.day-icon
+{
+    width: 4%;
+}
+
+.day-summary
+{
+    width: 25%;
+}
+
+.day-temp-min, .day-temp-high
+{
+    width: 5%;
+}
+
+.day-temp-min::after, .day-temp-high::after
+{
+    content: " C"
+}
+
+
+.hour-hour
+{
+    width: 20%;   
+}
+
+
+.hour-icon
+{
+    width: 15%;
+}
+
+.hour-summary
+{
+    width: 20%
+}
+
+.hour-temp
+{
+    width: 20%;
+}
+
+.hour-temp::after
+{
+    content: " C";
+}
+
+
+
+@media (max-width: 768px){
+    
+    .body
+    {
+        height: auto;
+    }
+    
+    .top_div
+    {
+        margin: 5% 0;
+    }
+    
+    nav
+    {
+        right: 20%;
+    }
+    
+    .overall
+    {
+        height: auto;
+    }
+    
+    .location
+    {
+        flex-direction: column;  
+    }
+    
+    .icon
+    {
+        order: 1;
+    }
+    
+    .location-timezone
+    {
+        order: 2;
+    }
+    
+    .chart-temp
+    {
+        flex-direction: column;
+    }
+    
+    .chart
+    {
+        width: 100%;
+        height: 250px;
+        order: 2;
+    }
+    
+    .temperature
+    {
+        width: 100%;
+        order: 1;
+    }
+
+    .daily
+    {
+        height: auto;
+    }
+    
+    .day
+    {
+        
+/*        width: auto;*/
+        padding: 10px 5px;
+        height: auto;
+        flex-wrap: wrap;
+    }
+   
+    #d
+    {
+        display: none;
+    }
+    
+    .list
+    {
+        flex: 1 1 50%;
+    }
+    
+    .days-details
+    {
+        margin: 0 0 4px 0;
+    }
+    
+    .day-date, .day-name
+    {
+        font-weight: bold;
+        padding: 5px 0;
+    }
+    
+    
+    .day-icon
+    {
+        flex: 1 1 10%;
+        order: 3;
+    }
+    
+    .day-summary
+    {
+        order: 4;
+    }
+    
+    .day-temp-min
+    {
+        order: 1;
+    }
+    
+    .day-temp-high
+    {
+        order: 2
+    }
+
+    
+    .day-temp-min::before
+    {
+        content: "Min temp: "
+    }
+    
+    .day-temp-high::before
+    {
+        content: "High temp: "   
+    }
+    
+    .hours-details
+    {
+        font-size: 0.8rem;
+    }
+    
+    #h
+    {
+/*        color: transparent;*/
+/*        order: 1;*/
+        font-size: 0.7rem;
+    }
+
+    #h .hour-temp::after
+    {
+        content: "";
+    }
+    
+    .hour
+    {
+        
+    }
+    
+    .hour-hour
+    {
+        width: 10%;
+        order: 1;
+    }
+    
+    .hour-hour::before
+    {
+/*        content: "H ";*/
+    }
+    
+    .hour-icon
+    {
+        width: 30%;
+        order: 3;
+        transform: translateX(-15%);
+    }
+    
+    .hour-summary
+    {
+        font-size: 0.7rem;
+        order: 4;
+        transform: translateX(-20%);
+    }
+    
+    .hour-temp
+    {
+        order: 2;
+    }
+    
+}
