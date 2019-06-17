@@ -8,7 +8,7 @@
     flex-direction: column;
     justify-content: space-around;
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 900px){
         height: auto;
         padding-bottom: 5rem;
     }
@@ -22,6 +22,9 @@
     justify-content: space-around;
     align-items: center;
 
+    @media screen and (max-width: 900px){
+        margin: 4rem 0;
+    }
 
     @media screen and (max-width: 600px){
         height: 20rem;
@@ -38,10 +41,16 @@
     margin: 0 auto;
     width: 100%;
 
-
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
+    @media screen and (max-width: 900px){
+        height: 30rem;
+        padding: 4rem 0;
+        margin-bottom: 6rem;
+    }
+
 
     @media screen and (max-width: 600px){
         height: 50rem;
@@ -119,7 +128,7 @@
 
     
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 900px){
         flex-direction: column;
     }
 
@@ -134,15 +143,18 @@
             margin-bottom: 2rem;
         }
 
-        @media screen and (max-width: 600px){
+        @media screen and (max-width: 900px){
             margin: 0 auto;
-            width: 100%;
+            width: 90%;
             height: 30rem;
-
 
             &:first-child{
                 margin-bottom: 10rem;
             }
+        }
+
+        @media screen and (max-width: 600px){
+            width: 100%;
         }
     }
 }
@@ -235,6 +247,10 @@
             order: 4;
             flex: 0 0 50%;
         }
+
+        & .location__canvas{
+            width: 55px;
+        }
     }
 
     &__summary{
@@ -278,78 +294,3 @@
     }
 }
 
-//HOURS DETAILS
-.hours{
-    background: $gradient-one;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    @media screen and (max-width: 600px){
-        
-    }
-
-    //test
-
-    &__details{
-        width: 100%;
-        padding-top: 5rem;
-
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-
-        height: 100vh;
-    }
-
-    &__hour{
-        width: 45%;
-        height: 10vh;
-        margin: 0 auto;
-        border-bottom: 1px dashed #fff;
-
-        font-size: 1.5rem;
-        text-shadow: $text-shadow-one;
-
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        &:first-child{
-            font-size: 2rem;
-        }
-
-        & > * {
-            text-align: center;
-        }
-
-        &:not(:first-child):hover{
-            background: rgba(138, 116, 116, 0.05);
-        }
-    }
-
-    &__time{
-        flex: 0 0 20%;
-    }
-
-    &__icon{
-        flex: 0 0 20%;
-
-        @media screen and (max-width: 600px){
-            width: 20px;
-        }
-    }
-
-    &__summary{
-        flex: 1;
-    }
-
-    &__temp{
-        flex: 0 0 15%;
-
-        &::after{
-            content: " C";
-        }
-    }
-}
