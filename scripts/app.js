@@ -481,7 +481,6 @@ const controller = (function(UICtr, APICtr){
 
                 //test
                 // console.log(weatData);
-                
 
                 // 3. UPDATE MAIN PAGE
                 // pass 4 data: - temperature, summary, timezone, icon 
@@ -537,34 +536,7 @@ const controller = (function(UICtr, APICtr){
 
                 }
                 
-                // 7. CREATE HOURS LIST
-                
-                {
-                //pass hours data: time, icon, summary, temp
-                    //destructuring
-                    let {hourly:{data}} = weatData;                    
-
-                    // reduce date to 17 elements
-                    data = data.splice(0, 17);
-                    
-                    //get needed data
-                    const hoursListIcon = data.map((cur)=> cur.icon);
-                    const hoursListSummary = data.map((cur) => cur.summary);
-                    const hoursListTemp = data.map((cur)=> changetoCels(cur.temperature));
-                    const hoursListTime =  data.map((cur)=> {
-                        let gmt = APICtr.getCities()[cityNr].gmt //get gtm for current city
-
-                        let time = new Date(cur.time * 1000); //create date object
-                        time.setHours(time.getHours() + gmt); //correct time with gmt
-
-                        return time.getHours() + ":00"; //return time with correct formatting
-                    });
-
-                    //pass date to function
-                    UICtr.updateHoursList(hoursListTime, hoursListIcon, hoursListSummary, hoursListTemp);
-                }
-
-                // 8. CLOCK
+                // 7. CLOCK
                 controller.clock();
                 
             });
