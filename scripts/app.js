@@ -24,6 +24,7 @@ const APIController =(function(){
             //api url
             const proxy = `https://cors-anywhere.herokuapp.com/`;
             const api = `${proxy}https://api.darksky.net/forecast/f330eefb7842750c7f2570bb7772fbcf/${lat},${long}`;
+            //API KEY HAS BEEN RESET. ABOVE ON IS NOT AVAILABLE
         
             //fetch promise
             let cityData = await fetch(api)
