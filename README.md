@@ -4,32 +4,39 @@
 ## Goal
 Create app to check weather forecast.
 
-Learn:
-- create first web app,
-- creat vanill JS projecti in old style (withourt modules),
-- read data from external API.
+Learn how to:
+- create web app,
+- create Vanilla JS project (without modules),
+- get data from external API.
 
 ## Stack
 #### Front-end
 - html (BEM)
-- sass (scss)
-- javascript
+- SASS (SCSS)
+- Vanill javascript
 
-## Data source
+## Project details
+My first JS project which I build based on tutorial from YouTube channel *Dev Ed*. Tutorial containt only main page. I added from myself two charts and sections *Day by day*.
+
+### Data source
 *Powered by Dark Sky*\
-API contains a lot of information about weather conditions. 
+API contains informations about weather conditions. 
 
+### Sections in project.
+#### Main dashboard
+Contain informations: timezone, current timezone time, current temperature, icons and two charts.\
+First show temperature in next 8 days, second temperature in few next hours.\
+On dropdown-list user can chose few random city.
 
-## Sections in project.
-### Main dashboard
-### Day by Day
+#### Day by Day
+This section contain 8 days with basic informations: date, day name, icon, summary, min temperature and max temperature.
+
+Source of icons:\
+https://darkskyapp.github.io/skycons/
 
 
 ## Developer:
 **Mateusz Wiśniewski**
-##### My Goal
-I like to create app based on data. So I want to learn how to create online charts and dashboards.\
-I think it is easier to remember what data bring to us when it is possibility to *touch* data and *play* with them. Web is perfect place to do this.
 
 Check my other repositories:
 https://github.com/mwisniewski1991?tab=repositories
