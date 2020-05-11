@@ -1,4 +1,4 @@
-# WEATHER APP
+# Weather APP
 #### Live: http://weather.m-wisniewski.usermd.net/
 
 ## Goal
